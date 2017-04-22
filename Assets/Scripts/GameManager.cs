@@ -15,6 +15,14 @@ public class GameManager : MonoBehaviour {
         GAMEOVER,
     };
 
+    public enum Direction
+    {
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    }
+
     GameObject playerObject;
 
     private bool isDead;
