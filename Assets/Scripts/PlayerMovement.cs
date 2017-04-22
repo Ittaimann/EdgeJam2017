@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void _JumpInputCheck()
     {
-        if (Input.GetButtonDown("Jump") && !jumpPressed)
+        if (Input.GetButtonDown("Jump") && !jumpPressed &&jumpCount!=0)
             jumpPressed = true;
         if (Input.GetButtonUp("Jump") && !_isGrounded())
             jumpCancel = true;
