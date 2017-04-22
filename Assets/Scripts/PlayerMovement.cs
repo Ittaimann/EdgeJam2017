@@ -37,7 +37,11 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded())
             jumpCount = maxJumpCount;
         _Jump();
+<<<<<<< HEAD
 
+=======
+        _isGrounded();
+>>>>>>> a687b199bb489cc5c794317532306f6b55f3f6b1
     }
 
     private void _MoveInput()
