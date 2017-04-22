@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         _MoveInput();
         _JumpInputCheck();
         _Jump();
+        _isGrounded();
     }
 
     private void _MoveInput()
