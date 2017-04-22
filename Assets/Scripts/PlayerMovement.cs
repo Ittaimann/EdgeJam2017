@@ -93,4 +93,20 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform; 
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
+    }
 }
