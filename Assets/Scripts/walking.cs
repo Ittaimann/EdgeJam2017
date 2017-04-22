@@ -32,8 +32,7 @@ public class walking : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector2 player_pos = player.GetComponent<Rigidbody2D>().position;
-        //print(Mathf.Abs((player.GetComponent<Rigidbody2D>().position - RB2D.position).x));
-        if ((Mathf.Abs((player_pos - RB2D.position).x) < playerdist))
+        if ((Mathf.Abs((player_pos - RB2D.position).x) < playerdist && Mathf.Abs(player_pos.y-RB2D.position.y)<1))
         {
             RB2D.position = Vector2.MoveTowards(new Vector2(RB2D.position.x,orig.y),new Vector2( player_pos.x,orig.y),chase_speed);
             returning = true;
@@ -83,14 +82,13 @@ public class walking : MonoBehaviour {
         {
             timer += Time.deltaTime;
             var i = Mathf.PingPong(timer, 1);
-            print(timer);
             RB2D.position = Vector2.Lerp(orig, point, i);
             _basicflip();
         }
     }
     private void _basicflip()
     {
-        if ((Mathf.Round(RB2D.position.x * 10f) / 10f) == (Mathf.Round(point.x * 10f) / 10f))
+        if ((Mathf.Round(RB2D.position.x) == (Mathf.Round(point.x))))
         {
             sprite.flipX = !(point.x < orig.x);
         }
