@@ -2,34 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 
     public float speed = 5.0f;
     public float minJumpVelocity = 2.5f;
     public float maxJumpVelocity = 5.0f;
-    
-    public int maxJumpCount = 2;
-    
+
+    public int maxJumpCount = 1;
+
     private Rigidbody2D rigid;
     private bool jump = false;
     private bool jumpCancel = false;
     private bool isGrounded = false;
-    private int jumpCount = 2;
+    [SerializeField]
+    private int jumpCount = 1;
     [HideInInspector]
     public static SpriteRenderer sprite;
 
-    void Start () {
+    void Start()
+    {
         rigid = GetComponent<Rigidbody2D>();
         jumpCount = maxJumpCount;
         sprite = GetComponentInChildren<SpriteRenderer>();
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
         _MoveInput();
         _JumpInputCheck();
-    }
-    void FixedUpdate()
-    {
         _Jump();
     }
 
@@ -59,19 +60,20 @@ public class PlayerMovement : MonoBehaviour {
         if (jump)
         {
             if (jumpCount > 0)
-            {
+            { 
+                jumpCount--;
                 rigid.velocity = new Vector2(rigid.velocity.x, 0);
                 rigid.velocity += new Vector2(0, maxJumpVelocity);
-                jumpCount--;
             }
             if (_isGrounded())
                 jump = false;
         }
         else
             jumpCount = maxJumpCount;
+
         if (jumpCancel)
         {
-            if(rigid.velocity.y > minJumpVelocity)
+            if (rigid.velocity.y > minJumpVelocity)
             {
                 rigid.velocity = new Vector2(rigid.velocity.x, 0);
                 rigid.velocity += new Vector2(0, minJumpVelocity);
@@ -88,5 +90,5 @@ public class PlayerMovement : MonoBehaviour {
             return true;
         return false;
     }
-    
+
 }
