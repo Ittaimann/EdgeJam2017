@@ -9,14 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public float minJumpVelocity = 2.5f;
     public float maxJumpVelocity = 5.0f;
 
-    public int maxJumpCount = 1;
+    public int maxJumpCount = 2;
 
     private Rigidbody2D rigid;
-    private bool jump = false;
+    private bool jumpPressed = false;
     private bool jumpCancel = false;
     private bool isGrounded = false;
     [SerializeField]
-    private int jumpCount = 1;
+    private int jumpCount = 2;
     [HideInInspector]
     public static SpriteRenderer sprite;
 
@@ -31,7 +31,13 @@ public class PlayerMovement : MonoBehaviour
     {
         _MoveInput();
         _JumpInputCheck();
+    }
+    void FixedUpdate()
+    {
+        if (_isGrounded())
+            jumpCount = maxJumpCount;
         _Jump();
+
     }
 
     private void _MoveInput()
@@ -50,26 +56,21 @@ public class PlayerMovement : MonoBehaviour
     }
     private void _JumpInputCheck()
     {
-        if (Input.GetButtonDown("Jump") && !jump)
-            jump = true;
+        if (Input.GetButtonDown("Jump") && !jumpPressed)
+            jumpPressed = true;
         if (Input.GetButtonUp("Jump") && !_isGrounded())
             jumpCancel = true;
     }
     private void _Jump()
     {
-        if (jump)
+        if (jumpPressed && jumpCount > 0)
         {
-            if (jumpCount > 0)
-            { 
-                jumpCount--;
-                rigid.velocity = new Vector2(rigid.velocity.x, 0);
-                rigid.velocity += new Vector2(0, maxJumpVelocity);
-            }
-            if (_isGrounded())
-                jump = false;
+            rigid.velocity = new Vector2(rigid.velocity.x, 0);
+            rigid.velocity += new Vector2(0, maxJumpVelocity);
+            jumpCount--;
+            jumpPressed = false;
+
         }
-        else
-            jumpCount = maxJumpCount;
 
         if (jumpCancel)
         {
@@ -80,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
             }
             jumpCancel = false;
         }
+
     }
     private bool _isGrounded()
     {
