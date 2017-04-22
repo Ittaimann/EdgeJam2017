@@ -88,7 +88,9 @@ public class walking : MonoBehaviour {
     }
     private void _basicflip()
     {
-        if ((Mathf.Round(RB2D.position.x) == (Mathf.Round(point.x))))
+
+
+        if (Mathf.PingPong(timer, 1) > .99f)
         {
             sprite.flipX = !(point.x < orig.x);
         }
