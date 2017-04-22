@@ -34,7 +34,6 @@ public class Death : MonoBehaviour {
         //screenshake
         Debug.Log(transform.name + " has died");
         gameObject.SetActive(false);
-        //Destroy(transform.root.gameObject);
         //health.onDeath -= Health_onDeath;
         GameManager.Instance.PlayerDied();
     }
