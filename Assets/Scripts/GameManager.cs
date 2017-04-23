@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        isDead = false;
         playerObject = FindObjectOfType<PlayerMovement>().gameObject;
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         cameras = new List<Camera>();
@@ -52,21 +53,24 @@ public class GameManager : MonoBehaviour
     {
         if (isDead)
         {
-
+            if (Input.anyKey)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
     public void PlayerDied()
     {
-        StartCoroutine(PlayerDiedCoroutine());
+
+        isDead = true;
+        //StartCoroutine(PlayerDiedCoroutine());
     }
 
-    public IEnumerator PlayerDiedCoroutine()
-    {
-        isDead = true;
-        yield return new WaitForSeconds(respawnTIme);
-        Respawn();
-    }
+    //public IEnumerator PlayerDiedCoroutine()
+    //{
+    //    isDead = true;
+    //    yield return new WaitForSeconds(respawnTIme);
+    //    //Respawn();
+    //}
 
     public void Respawn()
     {
