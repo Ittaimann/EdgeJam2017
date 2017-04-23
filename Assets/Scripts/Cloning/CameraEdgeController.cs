@@ -52,24 +52,26 @@ public class CameraEdgeController : MonoBehaviour {
     private EdgeCheck topEdge;
     private EdgeCollider2D bottomCollider;
     private EdgeCheck bottomEdge;
-	
-	void Start () {
+
+    void Awake()
+    {
+        originCam = this.GetComponent<Camera>();
+    }
+
+    void Start () {
         if(ClonePool.instance != null)
         {
             ClonePool.instance.registerCamera(this);
         }
 
-        originCam = this.GetComponent<Camera>();
         attachedPlayer = FindObjectOfType<PlayerMovement>();
 
-        Debug.Log("Generating Colliders");
         GenerateColliders();
         SetColliders();
 	}
 
     void GenerateColliders()
     {
-        Debug.Log("Generating Colliders");
         leftCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
         leftCollider.name = "Left";
         leftEdge = leftCollider.GetComponent<EdgeCheck>();
@@ -143,5 +145,14 @@ public class CameraEdgeController : MonoBehaviour {
             default: //Direction.RIGHT
                 return new WarpTo(rightWarp, rightWarp.getEdge(rightWarpSide));
         }
+    }
+
+    public bool containsPoint(Vector2 point)
+    {
+        //returns if a point exists within its othnographic render box
+        Vector2 boxsize = new Vector2((originCam.orthographicSize * 2) * originCam.aspect,
+                                originCam.orthographicSize * 2);
+        Rect bounds = new Rect( (Vector2)this.transform.position - boxsize/2, boxsize);
+        return point.x >= bounds.xMin && point.x <= bounds.xMax && point.y >= bounds.yMin && point.y <= bounds.yMax;
     }
 }
