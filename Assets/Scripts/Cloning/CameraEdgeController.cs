@@ -33,6 +33,7 @@ public class CameraEdgeController : MonoBehaviour {
     private Camera originCam;
     public Corner screenCorner;
     public PlayerMovement attachedPlayer;
+    public bool useCustomEdges;
     public GameObject EdgePrefab;
 
     public CameraEdgeController leftWarp;
@@ -45,13 +46,13 @@ public class CameraEdgeController : MonoBehaviour {
     public Direction bottomWarpSide = Direction.UP;
 
     private EdgeCollider2D leftCollider;
-    private EdgeCheck leftEdge;
+    public EdgeCheck leftEdge;
     private EdgeCollider2D rightCollider;
-    private EdgeCheck rightEdge;
+    public EdgeCheck rightEdge;
     private EdgeCollider2D topCollider;
-    private EdgeCheck topEdge;
+    public EdgeCheck topEdge;
     private EdgeCollider2D bottomCollider;
-    private EdgeCheck bottomEdge;
+    public EdgeCheck bottomEdge;
 
     void Awake()
     {
@@ -72,25 +73,39 @@ public class CameraEdgeController : MonoBehaviour {
 
     void GenerateColliders()
     {
-        leftCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
-        leftCollider.name = "Left";
-        leftEdge = leftCollider.GetComponent<EdgeCheck>();
-        leftEdge.dir = Direction.LEFT;
+        if (useCustomEdges)
+        {
+            leftEdge.dir = Direction.LEFT;
+            leftCollider = leftEdge.GetComponent<EdgeCollider2D>();
+            rightEdge.dir = Direction.RIGHT;
+            rightCollider = rightEdge.GetComponent<EdgeCollider2D>();
+            topEdge.dir = Direction.UP;
+            topCollider = topEdge.GetComponent<EdgeCollider2D>();
+            bottomEdge.dir = Direction.DOWN;
+            bottomCollider = bottomEdge.GetComponent<EdgeCollider2D>();
+        }
+        else
+        {
+            leftCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
+            leftCollider.name = "Left";
+            leftEdge = leftCollider.GetComponent<EdgeCheck>();
+            leftEdge.dir = Direction.LEFT;
 
-        rightCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
-        rightCollider.name = "Right";
-        rightEdge = rightCollider.GetComponent<EdgeCheck>();
-        rightEdge.dir = Direction.RIGHT;
+            rightCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
+            rightCollider.name = "Right";
+            rightEdge = rightCollider.GetComponent<EdgeCheck>();
+            rightEdge.dir = Direction.RIGHT;
 
-        topCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
-        topCollider.name = "Top";
-        topEdge = topCollider.GetComponent<EdgeCheck>();
-        topEdge.dir = Direction.UP;
+            topCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
+            topCollider.name = "Top";
+            topEdge = topCollider.GetComponent<EdgeCheck>();
+            topEdge.dir = Direction.UP;
 
-        bottomCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
-        bottomCollider.name = "Bottom";
-        bottomEdge = bottomCollider.GetComponent<EdgeCheck>();
-        bottomEdge.dir = Direction.DOWN;
+            bottomCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
+            bottomCollider.name = "Bottom";
+            bottomEdge = bottomCollider.GetComponent<EdgeCheck>();
+            bottomEdge.dir = Direction.DOWN;
+        }
     }
 	
     void SetColliders()

@@ -67,10 +67,13 @@ public class ClonePool : MonoBehaviour {
             if (!CameraPlayerMap[destination.cam].gameObject.activeInHierarchy) //If no other camera is currently using this player
             {
                 PlayerMovement Clone = CameraPlayerMap[destination.cam];
-                Vector3 offset = edge.transform.position - MainPlayer.transform.position;
+                PlayerMovement Source = CameraPlayerMap[alerted];
+                Vector3 offset = edge.transform.position - Source.transform.position;
                 Clone.transform.position = destination.edge.transform.position - offset;
-                Clone.GetComponent<Rigidbody2D>().velocity = MainPlayer.GetComponent<Rigidbody2D>().velocity;
                 Clone.gameObject.SetActive(true);
+                Clone.GetComponent<Rigidbody2D>().velocity = Source.GetComponent<Rigidbody2D>().velocity;
+                //TODO: Keep player variables consistent
+                Clone.CopyState(Source);
             }
         }
     }

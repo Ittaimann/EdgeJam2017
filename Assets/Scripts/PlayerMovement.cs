@@ -40,6 +40,15 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void CopyState(PlayerMovement other)
+    {
+        this.jumpCount = other.jumpCount;
+        this.jumpPressed = other.jumpPressed;
+        this.jumpCancel = other.jumpCancel;
+        this.isGrounded = other.isGrounded;
+        this._Jump();
+    }
+
     private void _MoveInput()
     {
         float horizontal = Input.GetAxis("Horizontal");
