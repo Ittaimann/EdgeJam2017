@@ -5,22 +5,26 @@ using UnityEngine;
 
 public class EdgeCheck : MonoBehaviour {
     private CameraEdgeController cameraParent;
-    public GameManager.Direction dir;
+    public Direction dir;
 
-	void Start () {
+	void Start ()
+    {
         cameraParent = GetComponentInParent<CameraEdgeController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if(ClonePool.instance != null && other.tag == "Player")
         {
             ClonePool.instance.TriggerSpawnEvent(cameraParent, this);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(ClonePool.instance != null && other.tag == "Player")
+        {
+            ClonePool.instance.TriggerDespawnEvent(cameraParent, this);
         }
     }
 }

@@ -13,19 +13,36 @@ public struct WarpTo
     public EdgeCheck edge;
 }
 
+public enum Direction
+{
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+}
+
+public enum Corner
+{
+    TOP_LEFT,
+    TOP_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT
+}
+
 public class CameraEdgeController : MonoBehaviour {
     private Camera originCam;
+    public Corner screenCorner;
     public PlayerMovement attachedPlayer;
     public GameObject EdgePrefab;
 
     public CameraEdgeController leftWarp;
-    public GameManager.Direction leftWarpSide;
+    public Direction leftWarpSide = Direction.RIGHT;
     public CameraEdgeController rightWarp;
-    public GameManager.Direction rightWarpSide;
+    public Direction rightWarpSide = Direction.LEFT;
     public CameraEdgeController topWarp;
-    public GameManager.Direction topWarpSide;
+    public Direction topWarpSide = Direction.DOWN;
     public CameraEdgeController bottomWarp;
-    public GameManager.Direction bottomWarpSide;
+    public Direction bottomWarpSide = Direction.UP;
 
     private EdgeCollider2D leftCollider;
     private EdgeCheck leftEdge;
@@ -37,6 +54,11 @@ public class CameraEdgeController : MonoBehaviour {
     private EdgeCheck bottomEdge;
 	
 	void Start () {
+        if(ClonePool.instance != null)
+        {
+            ClonePool.instance.registerCamera(this);
+        }
+
         originCam = this.GetComponent<Camera>();
         attachedPlayer = FindObjectOfType<PlayerMovement>();
 
@@ -51,18 +73,22 @@ public class CameraEdgeController : MonoBehaviour {
         leftCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
         leftCollider.name = "Left";
         leftEdge = leftCollider.GetComponent<EdgeCheck>();
+        leftEdge.dir = Direction.LEFT;
 
         rightCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
         rightCollider.name = "Right";
         rightEdge = rightCollider.GetComponent<EdgeCheck>();
+        rightEdge.dir = Direction.RIGHT;
 
         topCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
         topCollider.name = "Top";
         topEdge = topCollider.GetComponent<EdgeCheck>();
+        topEdge.dir = Direction.UP;
 
         bottomCollider = Instantiate(EdgePrefab, this.transform, false).GetComponent<EdgeCollider2D>();
         bottomCollider.name = "Bottom";
         bottomEdge = bottomCollider.GetComponent<EdgeCheck>();
+        bottomEdge.dir = Direction.DOWN;
     }
 	
     void SetColliders()
@@ -89,32 +115,32 @@ public class CameraEdgeController : MonoBehaviour {
         bottomCollider.transform.localPosition = new Vector2(0, -yOff);
     }
 
-    public EdgeCheck getEdge(GameManager.Direction dir)
+    public EdgeCheck getEdge(Direction dir)
     {
         switch(dir)
         {
-            case (GameManager.Direction.UP):
+            case (Direction.UP):
                 return topEdge;
-            case (GameManager.Direction.DOWN):
+            case (Direction.DOWN):
                 return bottomEdge;
-            case (GameManager.Direction.LEFT):
+            case (Direction.LEFT):
                 return leftEdge;
-            default: //GameManager.Direction.RIGHT
+            default: //Direction.RIGHT
                 return rightEdge;
         }
     }
 
-    public WarpTo getWarp(GameManager.Direction dir)
+    public WarpTo getWarp(Direction dir)
     {
         switch(dir)
         {
-            case (GameManager.Direction.UP):
+            case (Direction.UP):
                 return new WarpTo(topWarp, topWarp.getEdge(topWarpSide));
-            case (GameManager.Direction.DOWN):
+            case (Direction.DOWN):
                 return new WarpTo(bottomWarp, bottomWarp.getEdge(bottomWarpSide));
-            case (GameManager.Direction.LEFT):
+            case (Direction.LEFT):
                 return new WarpTo(leftWarp, leftWarp.getEdge(leftWarpSide));
-            default: //GameManager.Direction.RIGHT
+            default: //Direction.RIGHT
                 return new WarpTo(rightWarp, rightWarp.getEdge(rightWarpSide));
         }
     }
