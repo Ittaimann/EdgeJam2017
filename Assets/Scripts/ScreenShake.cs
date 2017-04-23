@@ -20,7 +20,7 @@ public class ScreenShake : MonoBehaviour
 
     void Awake()
     {
-        cam = Camera.main.transform;
+        cam = this.transform;
     }
 
     void OnEnable()

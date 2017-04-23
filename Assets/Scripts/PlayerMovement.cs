@@ -18,17 +18,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private int jumpCount = 2;
     [HideInInspector]
-    public static SpriteRenderer sprite;
+    public SpriteRenderer sprite;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         jumpCount = maxJumpCount;
         sprite = GetComponentInChildren<SpriteRenderer>();
+
     }
 
     void Update()
     {
+
         _MoveInput();
         _JumpInputCheck();
     }
@@ -40,6 +42,15 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    public void CopyState(PlayerMovement other)
+    {
+        this.jumpCount = other.jumpCount;
+        this.jumpPressed = other.jumpPressed;
+        this.jumpCancel = other.jumpCancel;
+        this.isGrounded = other.isGrounded;
+        this._Jump();
+    }
+
     private void _MoveInput()
     {
         float horizontal = Input.GetAxis("Horizontal");
@@ -48,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool _FlipFace(float horizontal)
     {
+        
         if (horizontal > 0)
             return false;
         if (horizontal == 0)
