@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private int jumpCount = 2;
     [HideInInspector]
-    public static SpriteRenderer sprite;
+    public SpriteRenderer sprite;
 
     void Start()
     {
