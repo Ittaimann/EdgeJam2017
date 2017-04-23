@@ -15,6 +15,11 @@ public class AttackController : MonoBehaviour
         attackCollider = GetComponentInChildren<BoxCollider2D>();
     }
 
+    private void Update()
+    {
+
+    }
+
     public bool IsAttacking()
     {
         return isAttacking;

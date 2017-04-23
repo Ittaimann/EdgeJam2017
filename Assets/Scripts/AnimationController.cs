@@ -15,7 +15,7 @@ public class AnimationController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         pm = GetComponent<PlayerMovement>();
         ac = GetComponent<AttackController>();
 	}

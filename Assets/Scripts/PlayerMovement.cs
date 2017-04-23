@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _FlipFace(float horizontal)
     {
         
-        if (horizontal > 0)
+        if (horizontal < 0)
             return false;
         if (horizontal == 0)
             return sprite.flipX;
