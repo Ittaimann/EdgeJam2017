@@ -20,7 +20,7 @@ public class EdgeCheck : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            ClonePool.instance.TriggerSpawnEvent(cameraParent, this);
+            // ClonePool.instance.TriggerSpawnEvent(cameraParent, this);
         }
     }
 }
