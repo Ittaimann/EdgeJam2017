@@ -9,15 +9,22 @@ public class spikeshoot : MonoBehaviour {
         resting,
         returning
     }
-
+    public enum SpikeDir
+    {
+        up,
+        down,
+        left,
+        right
+    }
 
     private SpikeState activeState;
- //   private Rigidbody2D rigid;
-    public float ydist;
-    public float xdist;
+
+    public SpikeDir spikeDir;
+    public float dist;
     public float launchTime;
     public float restTime;
     public float returnTime;
+    
     private float timeSpent;
 
     private Spike_trigger trigger;
@@ -35,7 +42,6 @@ public class spikeshoot : MonoBehaviour {
     }
     void FixedUpdate()
     {
-
         if (isShooting)
         {
             timeSpent += Time.deltaTime;
@@ -63,9 +69,7 @@ public class spikeshoot : MonoBehaviour {
                         isShooting = false;
                     }
                     break;
-           
             }
-            
         }           
     }
 
@@ -73,7 +77,22 @@ public class spikeshoot : MonoBehaviour {
     {
         GetComponentInChildren<Spike_trigger>().gameObject.SetActive(false);
         timeSpent = 0;
-        Endpoint = new Vector2(xdist, ydist) + Startpoint;
+        switch (spikeDir)
+        {
+            case SpikeDir.down:
+                Endpoint = Vector2.down * dist;
+                break;
+            case SpikeDir.up:
+                Endpoint = Vector2.up * dist;
+                break;
+            case SpikeDir.left:
+                Endpoint = Vector2.left * dist;
+                break;
+            case SpikeDir.right:
+                Endpoint = Vector2.right * dist;
+                break;
+        }
+        Endpoint += Startpoint;
 
         isShooting = true;
         activeState = SpikeState.launching;
