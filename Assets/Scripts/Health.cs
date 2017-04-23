@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Health : MonoBehaviour {
 
     public delegate void OnDamage(float amount);
@@ -37,19 +38,23 @@ public class Health : MonoBehaviour {
         onHealthChanged();
 
         if (health <= 0)
+        {
             onDeath();
+        }
 
         return priorHealth - health;
     }
 
     public virtual float Damage(float amount)
     {
+
         onDamage(amount);
         return SetHealth(health - amount);
     }
 
     public void Kill()
     {
+
         SetHealth(0);
     }
 

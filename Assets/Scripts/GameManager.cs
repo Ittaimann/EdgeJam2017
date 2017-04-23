@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public float respawnTIme;
 
     private int currentLevel;
-
+    private List<Camera> cameras;
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -40,6 +40,12 @@ public class GameManager : MonoBehaviour
     {
         playerObject = FindObjectOfType<PlayerMovement>().gameObject;
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+        cameras = new List<Camera>();
+        foreach(Camera cam in Camera.allCameras)
+        {
+            if (cam != Camera.main)
+                cameras.Add(cam);
+        }
     }
 
     private void Update()
@@ -75,5 +81,18 @@ public class GameManager : MonoBehaviour
         currentLevel++;
         if (currentLevel < SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(currentLevel);
+    }
+
+    public Camera CurrentCamera()
+    {
+        Vector3 viewPos;
+        foreach(Camera cam in cameras)
+        {
+            viewPos = cam.WorldToViewportPoint(playerObject.transform.position);
+            if (viewPos.x > 0 && viewPos.x < 1 && viewPos.y > 0 && viewPos.y < 1)
+                return cam;
+
+        }
+        return null;
     }
 }

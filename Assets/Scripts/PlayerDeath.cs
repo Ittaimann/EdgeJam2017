@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
-public class Death : MonoBehaviour {
+public class PlayerDeath : MonoBehaviour
+{
     Health health;
     SpriteRenderer sprite;
     bool spriteDisable = false;
@@ -32,9 +33,9 @@ public class Death : MonoBehaviour {
     private void Health_onDeath()
     {
         //screenshake
-        Debug.Log(transform.name + " has died");
         Instantiate(Resources.Load("death_particle"), transform);
-
+        Debug.Log(GameManager.Instance.CurrentCamera());
+        GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>().screenShake(0.01f,1.5f);
         gameObject.SetActive(false);
         //health.onDeath -= Health_onDeath;
         GameManager.Instance.PlayerDied();
