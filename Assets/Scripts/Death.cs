@@ -7,6 +7,7 @@ public class Death : MonoBehaviour {
     Health health;
     SpriteRenderer sprite;
     bool spriteDisable = false;
+    public ParticleSystem deathParticles;
 
     void Start()
     {
@@ -33,7 +34,8 @@ public class Death : MonoBehaviour {
     {
         //screenshake
         Debug.Log(transform.name + " has died");
-        Instantiate(Resources.Load("death_particle"), transform);
+        if(deathParticles != null)
+         Instantiate(deathParticles, transform.position, Quaternion.identity);
 
         gameObject.SetActive(false);
         //health.onDeath -= Health_onDeath;
