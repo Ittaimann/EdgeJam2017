@@ -39,8 +39,6 @@ public class Health : MonoBehaviour {
 
         if (health <= 0)
         {
-            Instantiate(Resources.Load("death_particle"), transform);
-
             onDeath();
         }
 
@@ -49,6 +47,7 @@ public class Health : MonoBehaviour {
 
     public virtual float Damage(float amount)
     {
+
         onDamage(amount);
         return SetHealth(health - amount);
     }
