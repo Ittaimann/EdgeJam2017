@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpPressed = false;
     private bool jumpCancel = false;
     private bool isGrounded = false;
+    private bool isMoving = false;
     [SerializeField]
     private int jumpCount = 2;
     [HideInInspector]
@@ -52,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private void _MoveInput()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        isMoving = (horizontal != 0);
         sprite.flipX = _FlipFace(horizontal);
         rigid.velocity = new Vector2(horizontal * speed, rigid.velocity.y);
     }
@@ -92,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
-    private bool _isGrounded()
+    public bool _isGrounded()
     {
         RaycastHit2D ray = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - .55f), Vector2.down);
         if (!ray)
@@ -100,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
         if (ray.collider.CompareTag("Ground") && ray.distance <= 0)
             return true;
         return false;
+    }
+
+    public bool _isMoving()
+    {
+        return isMoving;
     }
 
 
