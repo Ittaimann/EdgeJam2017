@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Health : MonoBehaviour {
 
     public delegate void OnDamage(float amount);
@@ -37,7 +38,11 @@ public class Health : MonoBehaviour {
         onHealthChanged();
 
         if (health <= 0)
+        {
+            Instantiate(Resources.Load("death_particle"), transform);
+
             onDeath();
+        }
 
         return priorHealth - health;
     }
@@ -50,6 +55,7 @@ public class Health : MonoBehaviour {
 
     public void Kill()
     {
+
         SetHealth(0);
     }
 
