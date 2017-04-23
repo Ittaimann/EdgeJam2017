@@ -26,10 +26,12 @@ public class PlayerMovement : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         jumpCount = maxJumpCount;
         sprite = GetComponentInChildren<SpriteRenderer>();
+
     }
 
     void Update()
     {
+
         _MoveInput();
         _JumpInputCheck();
     }
@@ -59,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool _FlipFace(float horizontal)
     {
+        
         if (horizontal > 0)
             return false;
         if (horizontal == 0)
