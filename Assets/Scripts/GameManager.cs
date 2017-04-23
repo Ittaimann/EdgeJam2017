@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     private static GameManager _instance;
 
     public static GameManager Instance { get { return _instance; } }
@@ -20,6 +22,8 @@ public class GameManager : MonoBehaviour {
     private bool isDead;
     public float respawnTIme;
 
+    private int currentLevel;
+
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -34,8 +38,9 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-       playerObject = FindObjectOfType<PlayerMovement>().gameObject;
-    } 
+        playerObject = FindObjectOfType<PlayerMovement>().gameObject;
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
+    }
 
     private void Update()
     {
@@ -63,5 +68,12 @@ public class GameManager : MonoBehaviour {
         playerObject.SetActive(true);
         playerObject.transform.position = respawnPoint.position;
         isDead = false;
+    }
+
+    public void LoadNextLevel()
+    {
+        currentLevel++;
+        if (currentLevel < SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene(currentLevel);
     }
 }
