@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         if (isDead)
         {
-            if (Input.anyKey)
+            if (Input.anyKeyDown)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

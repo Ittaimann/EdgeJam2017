@@ -11,20 +11,22 @@ public class PlayerMovement : MonoBehaviour
 
     public int maxJumpCount = 2;
 
-    private bool isDashing = false;
+    private bool isDashing;
     public float dashSpeed;
     public float dashDistance;
 
     private Rigidbody2D rigid;
     private bool jumpPressed = false;
     private bool jumpCancel = false;
-    private bool isGrounded = false;
+    [SerializeField]
     private bool isMoving = false;
     private int jumpCount = 2;
     [HideInInspector]
     public SpriteRenderer sprite;
     private Animator anim;
 
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
 
     void Start()
     {
@@ -39,13 +41,7 @@ public class PlayerMovement : MonoBehaviour
         _MoveInput();
         _JumpInputCheck();
         _DashInputCheck();
-        _UpdateAnimation();
-    }
-    private void _UpdateAnimation()
-    {
-        anim.SetBool("IsMoving", _isMoving());
-        anim.SetBool("IsGrounded", _isGrounded());
-        anim.SetBool("IsDashing", IsDashing());
+        _UpdateAnimations();
     }
 
 
@@ -55,6 +51,13 @@ public class PlayerMovement : MonoBehaviour
             jumpCount = maxJumpCount;
         _Jump();
         _Dash();
+    }
+
+    private void _UpdateAnimations()
+    {
+        anim.SetBool("IsMoving", _isMoving());
+        anim.SetBool("IsGrounded", _isGrounded());
+        anim.SetBool("IsDashing", IsDashing());
     }
 
     private void _MoveInput()
@@ -87,19 +90,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void _DashInputCheck()
     {
-        if (Input.GetButtonDown("Dash") && !isDashing)
+        if (Input.GetButtonDown("Dash"))
+        {
             isDashing = true;
+            if (dashSound)
+            {
+                AudioSource.PlayClipAtPoint(dashSound, Camera.main.transform.position);
+            }
+        }
     }
 
     private void _Jump()
     {
         if (jumpPressed && jumpCount > 0)
         {
-            anim.Play("mc jump",-1,0f);
-            jumpCount--;
+            AudioSource.PlayClipAtPoint(jumpSound, Camera.main.transform.position);
             rigid.velocity = new Vector2(rigid.velocity.x, 0);
             rigid.velocity += new Vector2(0, maxJumpVelocity);
+            jumpCount--;
             jumpPressed = false;
+
         }
 
         if (jumpCancel)
@@ -115,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool _isGrounded()
     {
-        RaycastHit2D ray = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y-.1f), Vector2.down);
+        RaycastHit2D ray = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - .55f), Vector2.down);
         if (!ray)
             return false;
         if (ray.collider.CompareTag("Ground") && ray.distance <= 0.1f)
@@ -133,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
         return isDashing;
     }
 
-    private void _Dash()
+    public void _Dash()
     {
         if (isDashing)
             StartCoroutine(_DashRoutine());
@@ -143,17 +153,9 @@ public class PlayerMovement : MonoBehaviour
         if (sprite.flipX)
             transform.position = Vector2.Lerp(transform.position, (Vector2)transform.position + new Vector2(dashDistance, 0), dashDistance / dashSpeed);
         else
-            transform.position = Vector2.Lerp(transform.position, ((Vector2)transform.position - new Vector2(dashDistance, 0)), dashDistance / dashSpeed);
+            transform.position = Vector2.Lerp(transform.position, (Vector2)transform.position - new Vector2(dashDistance, 0), dashDistance / dashSpeed);
         yield return new WaitForSeconds(dashDistance / dashSpeed);
         isDashing = false;
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            transform.parent = other.transform;
-        }
     }
 
     private void OnCollisionExit2D(Collision2D other)
