@@ -50,7 +50,7 @@ public class SceneFade : MonoBehaviour {
                 MaskMaterial.SetFloat("_Cutoff", timeLeft / fadeTime);
                 if(timeLeft <= 0)
                 {
-                    sc.swapToScene(targetScene);
+                    sc.swapToSceneTransition(targetScene);
                 }
                 break; 
         }

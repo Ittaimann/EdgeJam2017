@@ -21,9 +21,13 @@ public class FontFader : MonoBehaviour {
     private float timeLeft;
 
 	void Start () {
+
         fadeText = this.GetComponent<Text>();
         fadeState = FadeState.FadeIn;
         timeLeft = fadeTime;
+
+        targetScene = TransitionHelper.instance.sceneName;
+        fadeText.text = TransitionHelper.instance.levelName;
 	}
 	
 	// Update is called once per frame
