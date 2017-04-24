@@ -8,8 +8,9 @@ public class walking : MonoBehaviour {
     public float speed = 5.0f;
     public float chase_speed = .05f;
     private int dir = 1;
-    public Vector2 point;
     private Vector2 orig;
+
+    public Vector2 point;
     public static SpriteRenderer sprite;
     private GameObject player;
 
@@ -27,6 +28,8 @@ public class walking : MonoBehaviour {
         sprite = GetComponentInChildren<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
         returning = false;
+
+
     }
 	
 	// Update is called once per frame
@@ -38,12 +41,12 @@ public class walking : MonoBehaviour {
             returning = true;
             if (player_pos.x - RB2D.position.x < 0)
             {
-                sprite.flipX = true;
+                sprite.flipX = false;
                 direction = true;
             }
             else
             {
-                sprite.flipX = false;
+                sprite.flipX = true;
                 direction = false;
             }
         }
@@ -62,9 +65,9 @@ public class walking : MonoBehaviour {
             RB2D.position = Vector2.MoveTowards(RB2D.position, orig, chase_speed);
 
             if (RB2D.position.x < orig.x)
-                sprite.flipX = false;
-            else
                 sprite.flipX = true;
+            else
+                sprite.flipX = false;
 
             if ((Mathf.Round(RB2D.position.x * 10f) / 10f)== Mathf.Round(orig.x * 10f) / 10f)
             {
@@ -92,11 +95,11 @@ public class walking : MonoBehaviour {
 
         if (Mathf.PingPong(timer, 1) > .99f)
         {
-            sprite.flipX = !(point.x < orig.x);
+            sprite.flipX = (point.x < orig.x);
         }
         if ((Mathf.Round(RB2D.position.x * 10f) / 10f) == (Mathf.Round(orig.x * 10f) / 10f))
         {
-            sprite.flipX = (point.x < orig.x);
+            sprite.flipX = !(point.x < orig.x);
         }
     }
 }
