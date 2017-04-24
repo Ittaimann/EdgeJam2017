@@ -27,4 +27,9 @@ public class SceneController : MonoBehaviour {
         yield return new WaitForSeconds(time);
         swapToScene(scene);
     }
+
+    public void quitTheGame()
+    {
+        Application.Quit();
+    }
 }
