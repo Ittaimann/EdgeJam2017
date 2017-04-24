@@ -148,7 +148,15 @@ public class PlayerMovement : MonoBehaviour
                 rigid.velocity = new Vector2(dashSpeed, 0);
             else
                 rigid.velocity = new Vector2(dashSpeed * -1, 0);
+<<<<<<< HEAD
         else if (isDashing && finishedDashing)
+=======
+<<<<<<< HEAD
+        else if (isDashing && finishedDashing)
+=======
+        else if(finishedDashing)
+>>>>>>> 70483afeffb8e91867a0d74b37b94de7f2cd3e7c
+>>>>>>> origin/master
             FinishedDashMovement();
     }
 
