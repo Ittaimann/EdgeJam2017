@@ -34,7 +34,7 @@ public class walking : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector2 player_pos = player.GetComponent<Rigidbody2D>().position;
+        Vector2 player_pos = player.transform.position;
         if ((Mathf.Abs((player_pos - RB2D.position).x) < playerdist && Mathf.Abs(player_pos.y-RB2D.position.y)<1))
         {
             RB2D.position = Vector2.MoveTowards(new Vector2(RB2D.position.x,orig.y),new Vector2( player_pos.x,orig.y),chase_speed);
