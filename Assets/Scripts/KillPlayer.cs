@@ -17,7 +17,8 @@ public class KillPlayer : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             Health playerHealth = collision.gameObject.GetComponent<Health>();
-            playerHealth.Kill();
+            if(playerHealth != null )
+                playerHealth.Kill();
         }
     }
 }
