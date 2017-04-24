@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigid;
     private bool jumpPressed = false;
     private bool jumpCancel = false;
+    [SerializeField]
     private bool isGrounded = false;
     private bool isMoving = false;
     private int jumpCount = 2;
@@ -58,15 +59,6 @@ public class PlayerMovement : MonoBehaviour
         _Dash();
     }
 
-    public void CopyState(PlayerMovement other)
-    {
-        this.jumpCount = other.jumpCount;
-        this.jumpPressed = other.jumpPressed;
-        this.jumpCancel = other.jumpCancel;
-        this.isGrounded = other.isGrounded;
-        this._Jump();
-    }
-
     private void _MoveInput()
     {
         if (!isDashing)
@@ -80,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool _FlipFace(float horizontal)
     {
-        
+
         if (horizontal < 0)
             return false;
         if (horizontal == 0)
@@ -89,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void _JumpInputCheck()
     {
-        if (Input.GetButtonDown("Jump") && !jumpPressed &&jumpCount!=0)
+        if (Input.GetButtonDown("Jump") && !jumpPressed && jumpCount != 0)
             jumpPressed = true;
         if (Input.GetButtonUp("Jump") && !_isGrounded())
             jumpCancel = true;
@@ -128,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D ray = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - .55f), Vector2.down);
         if (!ray)
             return false;
-        if (ray.collider.CompareTag("Ground") && ray.distance <= 0)
+        if (ray.collider.CompareTag("Ground") && ray.distance <= 0.1f)
             return true;
         return false;
     }
@@ -156,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
                 rigid.velocity = new Vector2(dashSpeed, 0);
             else
                 rigid.velocity = new Vector2(dashSpeed * -1, 0);
-        else if(finishedDashing)
+        else if (isDashing && finishedDashing)
             FinishedDashMovement();
     }
 
@@ -172,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.tag == "MovingPlatform")
         {
-            transform.parent = other.transform; 
+            transform.parent = other.transform;
         }
     }
 
@@ -183,4 +175,5 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = null;
         }
     }
+
 }
