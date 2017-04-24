@@ -11,6 +11,12 @@ public class PlayerMovement : MonoBehaviour
 
     public int maxJumpCount = 2;
 
+    private bool isDashing;
+    private bool finishedDashing;
+    private bool isInvincible;
+    public float dashSpeed;
+    public float dashCooldown;
+
     private Rigidbody2D rigid;
     private bool jumpPressed = false;
     private bool jumpCancel = false;
@@ -20,27 +26,37 @@ public class PlayerMovement : MonoBehaviour
     private int jumpCount = 2;
     [HideInInspector]
     public SpriteRenderer sprite;
+    private AttackController ac;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         jumpCount = maxJumpCount;
         sprite = GetComponentInChildren<SpriteRenderer>();
-
+        ac = GetComponentInChildren<AttackController>();
     }
 
     void Update()
     {
-
+        _DashHelper();
         _MoveInput();
         _JumpInputCheck();
+        _DashInputCheck();
     }
+
+    void _DashHelper()
+    {
+        isDashing = ac.isDashing;
+        isInvincible = ac.isInvincible;
+        finishedDashing = ac.finishedDashing;
+    }
+
     void FixedUpdate()
     {
         if (_isGrounded())
             jumpCount = maxJumpCount;
         _Jump();
-
+        _Dash();
     }
 
     public void CopyState(PlayerMovement other)
@@ -54,10 +70,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void _MoveInput()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        isMoving = (horizontal != 0);
-        sprite.flipX = _FlipFace(horizontal);
-        rigid.velocity = new Vector2(horizontal * speed, rigid.velocity.y);
+        if (!isDashing)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            isMoving = (horizontal != 0);
+            sprite.flipX = _FlipFace(horizontal);
+            rigid.velocity = new Vector2(horizontal * speed, rigid.velocity.y);
+        }
+
     }
     private bool _FlipFace(float horizontal)
     {
@@ -75,6 +95,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonUp("Jump") && !_isGrounded())
             jumpCancel = true;
     }
+
+    private void _DashInputCheck()
+    {
+        if (Input.GetButtonDown("Dash"))
+            isDashing = true;
+    }
+
     private void _Jump()
     {
         if (jumpPressed && jumpCount > 0)
@@ -112,6 +139,34 @@ public class PlayerMovement : MonoBehaviour
         return isMoving;
     }
 
+
+    public bool IsInvincible()
+    {
+        return isInvincible;
+    }
+
+    public bool IsDashing()
+    {
+        return isDashing;
+    }
+
+    public void _Dash()
+    {
+        if (isDashing && !finishedDashing)
+            if (sprite.flipX)
+                rigid.velocity = new Vector2(dashSpeed, 0);
+            else
+                rigid.velocity = new Vector2(dashSpeed * -1, 0);
+        else if(isDashing && finishedDashing)
+            FinishedDashMovement();
+    }
+
+
+    public void FinishedDashMovement()
+    {
+        rigid.velocity = new Vector2(0, rigid.velocity.y);
+        finishedDashing = true;
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
