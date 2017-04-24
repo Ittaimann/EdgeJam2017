@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class walking : MonoBehaviour {
+public class EnemyAI : MonoBehaviour {
 
     private Rigidbody2D RB2D;
     public float speed = 5.0f;
