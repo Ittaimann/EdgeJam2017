@@ -8,8 +8,11 @@ public class AttackController : MonoBehaviour
     public bool isAttacking;
     public bool isDashing;
     public bool finishedDashing;
+    public bool isInvincible;
+    public float dashSpeed;
     public Collider2D attackCollider;
     public Rigidbody2D rb;
+    public AudioClip dashSound;
 
     // Use this for initialization
     void Start()
@@ -35,6 +38,21 @@ public class AttackController : MonoBehaviour
         return isAttacking;
     }
 
+    public bool IsInvincible()
+    {
+        return isInvincible;
+    }
+
+    public void EnableInvincible()
+    {
+        isInvincible = true;
+    }
+
+    public void DisableInvincible()
+    {
+        isInvincible = false;
+    }
+
     public bool IsDashing()
     {
         return isDashing;
@@ -42,6 +60,7 @@ public class AttackController : MonoBehaviour
 
     public void Dash()
     {
+
         isDashing = true;
     }
 
