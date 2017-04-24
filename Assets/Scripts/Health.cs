@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Health : MonoBehaviour {
+public class Health : MonoBehaviour
+{
 
     public delegate void OnDamage(float amount);
     public delegate void HealthChanged();
@@ -38,7 +39,7 @@ public class Health : MonoBehaviour {
     {
         float priorHealth = health;
         health = value;
-        if(health > maxHealth)
+        if (health > maxHealth)
             health = maxHealth;
 
         onHealthChanged();
@@ -53,19 +54,17 @@ public class Health : MonoBehaviour {
 
     public virtual float Damage(float amount)
     {
-        if (!pm.IsInvincible())
-        {
-            onDamage(amount);
-            return SetHealth(health - amount);
-        }
+
+        onDamage(amount);
+        return SetHealth(health - amount);
+
         return health;
     }
 
     public void Kill()
     {
-        if (!pm.IsInvincible())
-        {
-            SetHealth(0);
-        }
+
+        SetHealth(0);
+
     }
 }

@@ -8,8 +8,6 @@ public class AttackController : MonoBehaviour
     public bool isAttacking;
     public bool isDashing;
     public bool finishedDashing;
-    public bool isInvincible;
-    public float dashSpeed;
     public Collider2D attackCollider;
     public Rigidbody2D rb;
 
@@ -35,21 +33,6 @@ public class AttackController : MonoBehaviour
     public bool IsAttacking()
     {
         return isAttacking;
-    }
-
-    public bool IsInvincible()
-    {
-        return isInvincible;
-    }
-
-    public void EnableInvincible()
-    {
-        isInvincible = true;
-    }
-
-    public void DisableInvincible()
-    {
-        isInvincible = false;
     }
 
     public bool IsDashing()
