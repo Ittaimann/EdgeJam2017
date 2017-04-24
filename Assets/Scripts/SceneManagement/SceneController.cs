@@ -14,7 +14,7 @@ public class SceneController : MonoBehaviour {
     {
         TransitionHelper.instance.levelName = scene;
         TransitionHelper.instance.sceneName = scene;
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene("Transition");
     }
 
     public void swapToSceneDelayed(string scene, float time)

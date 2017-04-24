@@ -14,7 +14,7 @@ public class TransitionHelper : MonoBehaviour {
             {
                 if (_instance == null)
                 {
-                    _instance = Resources.Load<TransitionHelper>("Singletons/TransitionHolder");
+                    _instance = Resources.Load<TransitionHelper>("Singletons/TransitionHelper");
 
                     DontDestroyOnLoad(_instance);
                 }
