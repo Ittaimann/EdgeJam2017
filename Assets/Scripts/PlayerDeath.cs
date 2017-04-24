@@ -8,6 +8,7 @@ public class PlayerDeath : MonoBehaviour
     public GameObject deathParticle;
     Health health;
     SpriteRenderer sprite;
+    public AudioClip deathSound;
     
     bool spriteDisable = false;
 
@@ -36,6 +37,10 @@ public class PlayerDeath : MonoBehaviour
     {
         //screenshake
         Instantiate(deathParticle, transform.position, Quaternion.identity);
+        if (deathSound)
+        {
+            AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+        }
         
         if(GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>())
             GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>().screenShake(0.01f,1.5f);

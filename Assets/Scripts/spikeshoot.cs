@@ -32,6 +32,8 @@ public class spikeshoot : MonoBehaviour {
     private Vector2 Endpoint;
 
     private bool isShooting = false;
+
+    public AudioClip shootSound;
     // Use this for initialization
 
     void Start()
@@ -77,6 +79,10 @@ public class spikeshoot : MonoBehaviour {
     {
         GetComponentInChildren<Spike_trigger>().gameObject.SetActive(false);
         timeSpent = 0;
+        if (shootSound)
+        {
+            AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position);
+        }
         switch (spikeDir)
         {
             case SpikeDir.down:
