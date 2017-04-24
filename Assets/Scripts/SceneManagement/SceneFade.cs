@@ -24,6 +24,10 @@ public class SceneFade : MonoBehaviour {
         sc = GetComponent<SceneController>();
         MaskMaterial = GetComponent<Image>().material;
         timeLeft = fadeTime;
+        if(fadeState == FadeState.Rest)
+        {
+            MaskMaterial.SetFloat("_Cutoff", 1);
+        }
 	}
 
     public void Transition (string scene)
