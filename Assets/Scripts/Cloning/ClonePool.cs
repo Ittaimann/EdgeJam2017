@@ -73,7 +73,7 @@ public class ClonePool : MonoBehaviour {
                 Clone.gameObject.SetActive(true);
                 Clone.GetComponent<Rigidbody2D>().velocity = Source.GetComponent<Rigidbody2D>().velocity;
                 //TODO: Keep player variables consistent
-                Clone.CopyState(Source);
+                //Clone.CopyState(Source);
             }
         }
     }

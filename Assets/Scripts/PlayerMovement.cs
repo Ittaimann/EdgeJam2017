@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpCancel = false;
     private bool isGrounded = false;
     private bool isMoving = false;
-    [SerializeField]
     private int jumpCount = 2;
     [HideInInspector]
     public SpriteRenderer sprite;
