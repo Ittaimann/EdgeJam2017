@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     void _DashHelper()
     {
         isDashing = ac.isDashing;
+
         finishedDashing = ac.finishedDashing;
     }
 
