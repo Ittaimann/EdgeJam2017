@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing;
     private bool finishedDashing;
-    private bool isInvincible;
+    public bool isInvincible;
     public float dashSpeed;
     public float dashCooldown;
 
@@ -156,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
                 rigid.velocity = new Vector2(dashSpeed, 0);
             else
                 rigid.velocity = new Vector2(dashSpeed * -1, 0);
-        else if(isDashing && finishedDashing)
+        else if(finishedDashing)
             FinishedDashMovement();
     }
 
@@ -165,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rigid.velocity = new Vector2(0, rigid.velocity.y);
         finishedDashing = true;
+        isInvincible = false;
     }
 
     private void OnCollisionEnter2D(Collision2D other)

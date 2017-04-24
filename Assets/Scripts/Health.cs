@@ -22,10 +22,16 @@ public class Health : MonoBehaviour {
     public float HealthValue { get { return health; } }
     public float MaxHealthValue { get { return maxHealth; } }
     public float healthPercent { get { return health / maxHealth; } }
+    private PlayerMovement pm;
 
     public void Awake()
     {
         maxHealth = health;
+    }
+
+    public void Start()
+    {
+        pm = GetComponent<PlayerMovement>();
     }
 
     public float SetHealth(float value)
@@ -47,15 +53,19 @@ public class Health : MonoBehaviour {
 
     public virtual float Damage(float amount)
     {
-
-        onDamage(amount);
-        return SetHealth(health - amount);
+        if (!pm.IsInvincible())
+        {
+            onDamage(amount);
+            return SetHealth(health - amount);
+        }
+        return health;
     }
 
     public void Kill()
     {
-
-        SetHealth(0);
+        if (!pm.IsInvincible())
+        {
+            SetHealth(0);
+        }
     }
-
 }
