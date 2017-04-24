@@ -15,8 +15,8 @@ public class AnimationController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        animator = GetComponentInChildren<Animator>();
-        pm = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
+        pm = GetComponentInParent<PlayerMovement>();
         ac = GetComponent<AttackController>();
 	}
 	
@@ -25,5 +25,6 @@ public class AnimationController : MonoBehaviour {
         animator.SetBool("IsMoving", pm._isMoving());
         animator.SetBool("IsGrounded", pm._isGrounded());
         animator.SetBool("IsAttacking", ac.IsAttacking());
+        animator.SetBool("IsDashing", ac.IsDashing());
 	}
 }
