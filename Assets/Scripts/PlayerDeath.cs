@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class PlayerDeath : MonoBehaviour
 {
+    public GameObject deathParticle;
     Health health;
     SpriteRenderer sprite;
+    
     bool spriteDisable = false;
 
     void Start()
@@ -33,11 +35,11 @@ public class PlayerDeath : MonoBehaviour
     private void Health_onDeath()
     {
         //screenshake
-        Instantiate(Resources.Load("death_particle"), transform);
-        Debug.Log(GameManager.Instance.CurrentCamera());
+        Instantiate(deathParticle, transform.position, Quaternion.identity);
+        
         GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>().screenShake(0.01f,1.5f);
         gameObject.SetActive(false);
-        //health.onDeath -= Health_onDeath;
+        health.onDeath -= Health_onDeath;
         GameManager.Instance.PlayerDied();
     }
 }
