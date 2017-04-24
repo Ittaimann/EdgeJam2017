@@ -37,7 +37,8 @@ public class PlayerDeath : MonoBehaviour
         //screenshake
         Instantiate(deathParticle, transform.position, Quaternion.identity);
         
-        GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>().screenShake(0.01f,1.5f);
+        if(GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>())
+            GameManager.Instance.CurrentCamera().GetComponent<ScreenShake>().screenShake(0.01f,1.5f);
         gameObject.SetActive(false);
         health.onDeath -= Health_onDeath;
         GameManager.Instance.PlayerDied();

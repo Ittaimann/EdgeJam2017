@@ -17,7 +17,7 @@ public class AttackController : MonoBehaviour
     void Start()
     {
         attackCollider = GetComponentInChildren<BoxCollider2D>();
-        rb = GetComponentInParent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()

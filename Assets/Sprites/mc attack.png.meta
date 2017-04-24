@@ -1,11 +1,13 @@
 fileFormatVersion: 2
-guid: 3daa48f3bb07f174286cf0f273f9b7ae
-timeCreated: 1492995610
+guid: 8be82b9e413e02e4a9ddd4b8d007a5b8
+timeCreated: 1492998270
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mc jump_0
-    21300002: mc jump_1
+    21300000: mc attack_0
+    21300002: mc attack_1
+    21300004: mc attack_2
+    21300006: mc attack_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -42,7 +44,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 60
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -84,40 +86,58 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: WebGL
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc jump_0
+      name: mc attack_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 11
-        width: 115
-        height: 107
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 156
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: mc jump_1
+      name: mc attack_1
       rect:
         serializedVersion: 2
-        x: 109
-        y: 18
-        width: 115
-        height: 107
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 142
+        y: 0
+        width: 156
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mc attack_2
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 0
+        width: 156
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mc attack_3
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 0
+        width: 156
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
