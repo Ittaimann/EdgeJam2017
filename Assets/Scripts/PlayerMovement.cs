@@ -70,10 +70,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void _MoveInput()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        isMoving = (horizontal != 0);
-        sprite.flipX = _FlipFace(horizontal);
-        rigid.velocity = new Vector2(horizontal * speed, rigid.velocity.y);
+        if (!isDashing)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            isMoving = (horizontal != 0);
+            sprite.flipX = _FlipFace(horizontal);
+            rigid.velocity = new Vector2(horizontal * speed, rigid.velocity.y);
+        }
+
     }
     private bool _FlipFace(float horizontal)
     {
@@ -153,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
                 rigid.velocity = new Vector2(dashSpeed, 0);
             else
                 rigid.velocity = new Vector2(dashSpeed * -1, 0);
-        else if(finishedDashing)
+        else if(isDashing && finishedDashing)
             FinishedDashMovement();
     }
 
