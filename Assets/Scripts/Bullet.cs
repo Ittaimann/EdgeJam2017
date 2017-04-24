@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : Projectile {
-    public override void OnTriggerEnter2D(Collider2D other)
+    public override void OnTriggerStay2D(Collider2D other)
     {
         DestroySelf();
     }

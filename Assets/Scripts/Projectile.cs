@@ -7,7 +7,7 @@ public abstract class Projectile : MonoBehaviour
     public float speed;
     protected Rigidbody2D rb;
 
-    public abstract void OnTriggerEnter2D(Collider2D other);
+    public abstract void OnTriggerStay2D(Collider2D other);
     public abstract void DestroySelf();
 
     void Start()
